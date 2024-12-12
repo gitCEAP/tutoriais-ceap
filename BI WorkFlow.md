@@ -1,9 +1,3 @@
-Claro! Um planejamento DevOps adaptado para o desenvolvimento de soluções de **Business Intelligence (BI)**, com foco na **geração de relatórios** e análise de dados, envolve algumas etapas específicas que podem ser ajustadas à metodologia ágil e DevOps. O objetivo aqui é garantir a automação do processo de geração e entrega de relatórios, controle da qualidade dos dados e facilitar a colaboração entre as equipes de dados, desenvolvimento e operações.
-
-Aqui está um **fluxo DevOps para a criação de soluções BI**, do levantamento de requisitos até a entrega dos relatórios e dashboards:
-
----
-
 ### **1. Levantamento de Requisitos e Planejamento (Análise de Dados e Requisitos do Relatório)**
 
 #### **Objetivo:** Entender as necessidades dos usuários finais e o tipo de análise de dados necessária para a criação dos relatórios BI.
