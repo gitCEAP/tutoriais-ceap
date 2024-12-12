@@ -1,7 +1,3 @@
-Claro! Entendo que, como você está na primeira versão e buscando um modelo mais enxuto, o foco deve ser em ferramentas simples, acessíveis e que cubram as necessidades básicas de um processo DevOps sem sobrecarregar a equipe. O ideal é começar com o essencial, focando na automação de integração e entrega contínuas, além de garantir que a qualidade do código seja mantida e a infraestrutura seja facilmente gerenciável.
-
-Aqui vai um conjunto de **ferramentas gratuitas** para cada uma das etapas do ciclo de desenvolvimento, considerando um modelo DevOps mais enxuto:
-
 ### 1. **Controle de Versão**
 
 -   **Ferramenta recomendada:** [**GitHub**](https://github.com/) ou [**GitLab**](https://gitlab.com/)

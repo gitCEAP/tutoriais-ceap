@@ -1,5 +1,3 @@
-Com certeza! Vamos detalhar o processo de desenvolvimento de uma solução, desde a solicitação do usuário até a entrega, utilizando um modelo DevOps enxuto, que envolva as ferramentas que mencionei anteriormente. O objetivo é criar um fluxo contínuo e ágil, promovendo a colaboração entre as equipes e automação dos processos para garantir eficiência, qualidade e rapidez na entrega.
-
 ### 1. **Recebimento da Solicitação do Usuário (Planejamento e Levantamento de Requisitos)**
 
 -   **Objetivo:** Entender claramente o que o usuário precisa e definir os requisitos do sistema.
