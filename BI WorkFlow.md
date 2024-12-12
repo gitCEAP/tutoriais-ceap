@@ -152,5 +152,4 @@
 | Levantamento de Requisitos    | Jira, Trello, Confluence                      |
 | Preparação dos Dados (ETL)    | Apache Airflow, Talend, dbt, SQL              |
 | Desenvolvimento de Relatórios | Power BI, Tableau, Looker, Google Data Studio |
-
-| CI - Validação de Dados
+| CI - Validação de Dados       | Acompanhamento com o cliente                  |
