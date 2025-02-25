@@ -43,6 +43,11 @@ Neste documento não estão previstas informações comuns como profissões, rel
   - [TB\_PARCELA\_PAG\_DESACR](#tb_parcela_pag_desacr)
   - [TB\_TITULO\_BANCARIO](#tb_titulo_bancario)
   - [TB\_REMESSA\_TITULO](#tb_remessa_titulo)
+  - [TB\_PRECEPTORIA](#tb_preceptoria)
+- [TRIGGERS](#triggers)
+  - [TRG\_SYNC\_PES\_CODTEL](#trg_sync_pes_codtel)
+    - [Detalhes](#detalhes)
+    - [Script](#script)
 
 ## CAMPOS COMUNS A TODAS AS TABELAS:
 
@@ -628,3 +633,57 @@ Neste documento não estão previstas informações comuns como profissões, rel
 -   RTI_DATAACAO - data que está sendo criado o registro. Caso tenha arquivo remessa, pode usar a data de criação do arquivo remessa.
 -   RTI_TIPOACAO - ação será fixo. 'INCLUSAO'
 -   RTI_NOSSONUMERO - nosso número do título ao qual este registro está vinculado.
+
+## TB_PRECEPTORIA
+
+(Tabela utilizada para registrar as preceptorias realizadas pelos alunos)
+
+-   PRC_ID - ID da preceptoria (PK AUTO INCREMENTADO)
+-   PRC_PRECPID - ID do preceptor (FK para TB_PESSOA)
+-   PRC_MALID - ID da matrícula do aluno (FK para TB_MESTRE_ALUNO)
+-   PRC_DATREG - Data de registro da preceptoria (DEFAULT getdate())
+-   PRC_DATPRECEPTORIA - Data da preceptoria
+-   Chaves Primárias e Índices
+-   PRIMARY KEY CLUSTERED: PRC_ID
+-   Restrições e Relacionamentos
+-   FOREIGN KEY (PRC_MALID): Referencia a tabela TB_MESTRE_ALUNO (MAL_ID)
+-   FOREIGN KEY (PRC_PRECPID): Referencia a tabela TB_PESSOA (PES_ID)
+
+# TRIGGERS
+
+## TRG_SYNC_PES_CODTEL
+
+Trigger utilizada para sincronizar o campo `PES_CODTEL` e atualizar o campo `PES_EMAIL` na tabela `TB_PESSOA` após uma inserção ou atualização.
+
+### Detalhes
+
+-   **Nome:** TRG_SYNC_PES_CODTEL
+-   **Tabela:** TB_PESSOA
+-   **Tipo:** AFTER INSERT, UPDATE
+-   **Descrição:** Atualiza o campo `PES_CODTEL` com uma substring do campo `PES_EMAILINSTITUICAO` (o código do aluno exemplo: joao.2025123@aluno.pedreira.org → `PES_CODTEL = 2025123`) e o campo `PES_EMAIL` com o valor de `PES_EMAILINSTITUICAO` caso `PES_EMAIL` seja nulo ou contenha o domínio `@aluno.pedreira.org`, inserindo o e-mail do CEAP para os alunos que não o tenham, ou atualizando, apenas caso o `PES_EMAIL` já não esteja preenchido com um e-mail que não tem `@aluno.pedreira.org`
+
+### Script
+
+```sql
+USE [ceap_ico]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER TRIGGER [dbo].[TRG_SYNC_PES_CODTEL]
+    ON [dbo].[TB_PESSOA]
+    AFTER INSERT, UPDATE
+    AS BEGIN
+           UPDATE P
+           SET    P.PES_CODTEL = SUBSTRING(I.PES_EMAILINSTITUICAO, CHARINDEX('.', I.PES_EMAILINSTITUICAO) + 1, 7),
+                  P.PES_EMAIL  = CASE WHEN P.PES_EMAIL IS NULL
+                                           OR P.PES_EMAIL LIKE '%@aluno.pedreira.org' THEN I.PES_EMAILINSTITUICAO ELSE P.PES_EMAIL END
+           FROM   TB_PESSOA AS P
+                  INNER JOIN
+                  INSERTED AS I
+                  ON P.PES_ID = I.PES_ID
+           WHERE  I.PES_EMAILINSTITUICAO LIKE '%@aluno.pedreira.org';
+       END
+GO
+```
